@@ -1,6 +1,8 @@
 import React, { useEffect, useState} from 'react';
 import If from './if';
 import { Button } from 'react-bootstrap';
+import JSONPretty from 'react-json-pretty';
+
 
 function TodoList(props) {
   const [flag, setFlag] = useState()
@@ -13,7 +15,6 @@ function TodoList(props) {
   return (
 
       <ul>
-        {console.log(document.getElementById(1))}
         {props.list? props.list.map(item => (
           <li
          
@@ -36,8 +37,8 @@ function TodoList(props) {
               submit
               </Button>
             {/* <button type='submit'>submit</button> */}
-            {/* <input id={item._id}></input> */}
-            <textarea id={item._id} required></textarea>
+            {/* <input id={item._id}><JSONPretty id="json-pretty" data={item.text}></JSONPretty></input> */}
+            <textarea id={item._id} placeholder={item.text} required></textarea>
             </If>
             </form>
           </li>

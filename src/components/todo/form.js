@@ -1,20 +1,12 @@
 import React, { useEffect, useState }from 'react';
 import { Button } from 'react-bootstrap';
+import useForm from '../../hooks/useform';
 
 
 const TodoForm = (props) => {
-  const [task, setTask] = useState({});
 
-  let handleInputChange = (e) => {
-    setTask({...task, [e.target.name]: e.target.value }) 
-  };
-  let handleSubmit = (e) => {
-    e.preventDefault();
-    e.target.reset();
-    props.handleSubmit(task);
-    const item = {};
-   setTask({item})
-  };
+  const [ handleInputChange, handleSubmit] =  useForm(props)
+
   return (
     <>
       <h3>Add Item</h3>
@@ -35,8 +27,8 @@ const TodoForm = (props) => {
           <span>Assigned To</span>
           <input type="text" name="assignee" placeholder="Assigned To" onChange={handleInputChange} />
         </label>
-        {/* <button>Add Item</button> */}
-        <Button>Add Item</Button>
+        <button>Add Item</button>
+        {/* <Button>Add Item</Button> */}
       </form>
     </>
   );
