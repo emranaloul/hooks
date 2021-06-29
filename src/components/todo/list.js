@@ -4,10 +4,18 @@ import { Button } from 'react-bootstrap';
 import JSONPretty from 'react-json-pretty';
 
 
+let idF;
 function TodoList(props) {
+  
   const [flag, setFlag] = useState()
+  
+  let editHandler = (id)=>{ 
+  idF= id
+    setFlag(!flag)
+  }
    function handler(e, id) {
-     e.preventDefault()
+     
+    e.preventDefault()
     let value = document.getElementById(id).value;
     props.handleEdit(id,value)
     setFlag(!flag)
@@ -29,10 +37,9 @@ function TodoList(props) {
             <button onClick={() =>  props.handleDelete(item._id)}>X</button>
             <form onSubmit={(e)=>handler(e,item._id)}>
             {/* <button type='button' onClick={() => setFlag(!flag)}>Edit</button> */}
-            <Button type='button' onClick={() =>setFlag(!flag)}>Edit</Button>
-            {/* {setFlag(['a'])} */}
-            {/* {console.log(flag)} */}
-            <If condition={!flag}>
+            <Button type='button' onClick={()=>editHandler(item._id)}>Edit</Button>
+           
+            <If condition={flag && (idF === item._id)}>
               <Button type='submit'>
               submit
               </Button>

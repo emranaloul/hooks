@@ -1,14 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import TodoForm from "./form.js";
 import TodoList from "./list.js";
 import axios from "axios";
 import useAjax from "../../hooks/useajax";
+import  {CompletedTasks}  from '../../context/completed-tasks';
+import CompletedSettings from './completed-settings'
+
 
 import "./todo.scss";
 
 const todoAPI = "https://api-js401.herokuapp.com/api/v1/todo";
 
 const ToDo = () => {
+  
+
+  const context = useContext(CompletedTasks)
+  console.log("🚀 ~ file: todo-connected.js ~ line 17 ~ ToDo ~ context", context)
+
   let [handleRequest] = useAjax();
   const [list, setList] = useState([]);
 
@@ -40,14 +48,24 @@ const ToDo = () => {
       }
     }
   };
+  
+  const _getTodoItems =   () => {
 
-  const _getTodoItems = async () => {
-    try {
-      let data = await handleRequest(todoAPI, "get");
-      setList(data.data.results);
-    } catch (error) {
-      console.error(error.message);
-    }
+
+    handleRequest(todoAPI, "get")
+    .then((results) => {
+      setList( context.data );
+
+    })
+
+    .catch(console.error);
+    
+    // try {   
+    //   let list = await handleRequest(todoAPI, "get");
+    //   console.log("🚀 ~ file: todo-connected.js ~ line 55 ~ const_getTodoItems= ~ list", list)
+    // } catch (error) {
+    //   console.error(error.message);
+    // }
   };
 
   const handleDelete = async (id) => {
@@ -86,10 +104,11 @@ const ToDo = () => {
     }
   };
 
-  useEffect(_getTodoItems, [handleRequest]);
+  useEffect(_getTodoItems, [context]);
 
   return (
     <>
+
       <header>
         <h2>
           There are {list.filter((item) => !item.complete).length} Items To
@@ -99,6 +118,7 @@ const ToDo = () => {
 
       <section className="todo">
         <div>
+          <CompletedSettings />
           <TodoForm handleSubmit={_addItem} />
         </div>
 
@@ -112,6 +132,7 @@ const ToDo = () => {
         </div>
       </section>
     </>
+    
   );
 };
 
