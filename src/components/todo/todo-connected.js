@@ -1,10 +1,12 @@
 import React, { useEffect, useState, useContext } from "react";
 import TodoForm from "./form.js";
 import TodoList from "./list.js";
-import axios from "axios";
 import useAjax from "../../hooks/useajax";
-import  {CompletedTasks}  from '../../context/completed-tasks';
+import { displayContext } from "../../context/display-items";
 import CompletedSettings from './completed-settings'
+import Display from './display'
+import DisplaySettings from './display-settings.jsx'
+import Sort from './sort'
 
 
 import "./todo.scss";
@@ -14,11 +16,12 @@ const todoAPI = "https://api-js401.herokuapp.com/api/v1/todo";
 const ToDo = () => {
   
 
-  const context = useContext(CompletedTasks)
-  console.log("🚀 ~ file: todo-connected.js ~ line 17 ~ ToDo ~ context", context)
+  const context = useContext(displayContext)
+  console.log("🚀 ~ file: todo-connected.js ~ line 18 ~ ToDo ~ context", context)
 
   let [handleRequest] = useAjax();
   const [list, setList] = useState([]);
+  const [display, setDisplay] = useState()
 
   const _addItem = async (item) => {
     item.due = new Date();
@@ -104,6 +107,12 @@ const ToDo = () => {
     }
   };
 
+  let displayHandle = (e)=>{
+    e.preventDefault();
+    console.log("🚀 ~ file: todo-connected.js ~ line 109 ~ displayHandle ~ e", e.target.display.value);
+    setDisplay(e.target.display.value)
+  }
+
   useEffect(_getTodoItems, [context]);
 
   return (
@@ -115,20 +124,29 @@ const ToDo = () => {
           Complete
         </h2>
       </header>
-
       <section className="todo">
         <div>
+          <div>
+
           <CompletedSettings />
+          </div>
+          <div>
+
+          <Sort />
+          </div>
+          
           <TodoForm handleSubmit={_addItem} />
         </div>
 
         <div>
+      <Display handleInsert={displayHandle} />
           <TodoList
             list={list}
             handleComplete={_toggleComplete}
             handleDelete={handleDelete}
             handleEdit={handleEdit}
           />
+        <DisplaySettings display={display} />
         </div>
       </section>
     </>

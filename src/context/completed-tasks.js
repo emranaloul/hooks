@@ -11,28 +11,29 @@ const IncompleteTasks = (props) =>{
     let  toggleMode = () => {
         setToggle( state.checked === false ? true : false )
      };
+     let sortFun  = () => {
+         setSort( state.sort === false ? true : false )
+     }
+
      const [data, setData] = useState([]);
      const [toggle, setToggle] = useState(false)
+     const [sort, setSort] = useState(false)
     
 
     let state = {
         checked: toggle, 
+        sort: sort,
         data: data,
-        toggle: toggleMode
+        toggle: toggleMode,
+        sortFun: sortFun,
     }
-    // handleRequest(todoAPI, 'get')
-    // .then((res) =>{
-    //     setData(res.data.results)
-
-    //     console.log('data', data)
-    // })
+    
     useEffect( ()=>{
         (async ()=> {
             
             let results = await handleRequest(todoAPI, 'get')
             let list = results.data.results.filter(val => val.complete === false);
             if(state.checked === false){
-                console.log('hello');
                 setData(list)
                 
             } else if(state.checked === true) {
@@ -40,6 +41,19 @@ const IncompleteTasks = (props) =>{
             }
         })();
 }, [state.checked])
+
+useEffect( () => {
+    console.log('hello')
+    if(state.sort === false){
+        setData(state.data)
+        
+    } else if(state.checked === true) {
+         state.data.sort((a,b)=>{
+            return b.difficulty - a.difficulty
+           })
+        //    let results = setData(results)
+    }
+}, [state.sort])
         
         // useEffect(()=>{
     //     console.log("hello")
