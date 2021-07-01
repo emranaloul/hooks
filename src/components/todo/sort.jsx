@@ -1,5 +1,7 @@
 import React, {useContext} from "react";
 import { CompletedTasks } from "../../context/completed-tasks";
+import { Button } from 'react-bootstrap';
+
 
 const Sort = props => {
 
@@ -7,9 +9,11 @@ const Sort = props => {
 
     return (
         <> 
-        <input type="checkbox" name="sort" id="sort" checked={context.sort} onChange={context.sortFun}></input>
+        {/* <button  id="sort" onClick={context.sortFun}>Sort by Difficulty</button> */}
+        <Button id="sort" onClick={context.sortFun}>Sort by Difficulty</Button>
+        {/* <input type="checkbox" name="sort" id="sort" checked={context.sort} onChange={context.sortFun}></input>
             
-        <label for="sort">Sort by Difficulty</label>
+        <label for="sort">Sort by Difficulty</label> */}
 
         </>
 
