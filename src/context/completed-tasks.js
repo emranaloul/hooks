@@ -43,13 +43,11 @@ const IncompleteTasks = (props) =>{
 }, [state.checked])
 
 useEffect( () => {
-    console.log('hello', state.sort)
     if(state.sort === false){
         setData(state.data)
         
     } else if(state.sort === true) {
          state.data.sort((a,b)=>{
-            console.log('hello again')
             return b.difficulty - a.difficulty
            })
            state.sortFun()
@@ -57,10 +55,9 @@ useEffect( () => {
     }
 }, [state.sort])
         
-        // useEffect(()=>{
-    //     console.log("hello")
-
-    // }, [results])
+    //     useEffect(()=>{
+    //     sortFun()
+    // }, [state.data])
 
     
 

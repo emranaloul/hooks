@@ -7,6 +7,8 @@ import CompletedSettings from './completed-settings'
 import Display from './display'
 import DisplaySettings from './display-settings.jsx'
 import Sort from './sort'
+import Acl from './acl'
+
 
 
 import "./todo.scss";
@@ -15,9 +17,16 @@ const todoAPI = "https://api-js401.herokuapp.com/api/v1/todo";
 
 const ToDo = () => {
   
+  const FormRender = props => {
+    return(
+  
+    <Acl capability='create'>
+       <TodoForm handleSubmit={_addItem}/>
+    </Acl>
+    )
+  }
 
   const context = useContext(displayContext)
-  console.log("🚀 ~ file: todo-connected.js ~ line 18 ~ ToDo ~ context", context)
 
   let [handleRequest] = useAjax();
   const [list, setList] = useState([]);
@@ -63,12 +72,6 @@ const ToDo = () => {
 
     .catch(console.error);
     
-    // try {   
-    //   let list = await handleRequest(todoAPI, "get");
-    //   console.log("🚀 ~ file: todo-connected.js ~ line 55 ~ const_getTodoItems= ~ list", list)
-    // } catch (error) {
-    //   console.error(error.message);
-    // }
   };
 
   const handleDelete = async (id) => {
@@ -109,7 +112,6 @@ const ToDo = () => {
 
   let displayHandle = (e)=>{
     e.preventDefault();
-    console.log("🚀 ~ file: todo-connected.js ~ line 109 ~ displayHandle ~ e", e.target.display.value);
     setDisplay(e.target.display.value)
   }
 
@@ -135,7 +137,7 @@ const ToDo = () => {
           <Sort />
           </div>
           
-          <TodoForm handleSubmit={_addItem} />
+          <FormRender />
         </div>
 
         <div>

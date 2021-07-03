@@ -1,0 +1,32 @@
+#loginbar{
+    display:flex;
+    justify-content: space-around;
+    background-color: skyblue;
+}
+
+#signupspace{
+    background-color:skyblue;
+    border: solid 1px black;
+   display:flex;
+   
+
+}
+#signup{
+   display:flexbox;
+margin:auto;  
+}
+input{
+    margin: 10px;
+}
+#signupBtn{
+    margin-left: 50px;
+}
+select{
+    padding: 5px;
+}
+fieldset {
+    border: solid 1px black;
+    padding: 20px;
+}
+
+
